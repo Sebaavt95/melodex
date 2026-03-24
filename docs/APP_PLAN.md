@@ -1,4 +1,4 @@
-# Melody Harmonizer --- Documento de planificación
+# Melodex --- Documento de planificación
 
 ## CONTEXTO
 
