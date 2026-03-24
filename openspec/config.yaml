@@ -1,0 +1,5 @@
+schema: spec-driven
+
+context: |
+  Idioma: Español
+  Todas las specs deben estar redactadas en español. Salvo el archivo spec.md, que debe estar redactado en inglés.
