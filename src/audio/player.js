@@ -31,13 +31,34 @@ const getHarmonySynth = () => {
 };
 
 /**
- * Stop any current playback by clearing the pending completion timeout.
+ * Silence a synth: release the sounding voice and drop every envelope event
+ * that is still scheduled.
+ *
+ * playMelody/playBoth pre-schedule all notes as absolute-time Web Audio
+ * automation, not as transport events, so nothing in Tone's transport timeline
+ * can cancel them. `envelope.cancel()` with no argument cancels every change at
+ * or after `context.now()`, which kills the queued attacks. Tone.Synth has no
+ * `releaseAll()` (that is PolySynth/Sampler only), so `triggerRelease()` is the
+ * documented way to release a monophonic voice.
+ */
+const silenceSynth = (synth) => {
+  if (!synth) {
+    return;
+  }
+  synth.triggerRelease();
+  synth.envelope.cancel();
+};
+
+/**
+ * Stop playback: silence both voices and clear the pending completion timeout.
  */
 export const stopPlayback = () => {
   if (stopTimeout) {
     clearTimeout(stopTimeout);
     stopTimeout = null;
   }
+  silenceSynth(melodySynth);
+  silenceSynth(harmonySynth);
 };
 
 /**
