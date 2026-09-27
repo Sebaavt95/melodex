@@ -10,9 +10,9 @@ status: in-progress
 
 > Change: `melodex-minimalist-design`
 > Total tasks: 41 (T0: 5, Slice 1: 6, Slice 2: 10, Slice 3: 8, Slice 4: 5, Slice 5: 7)
-> Status: in-progress (T0 ✅, Slice 1 ✅, Slice 2 ✅, Slice 3 ✅, Slices 4–5 pending)
+> Status: in-progress (T0 ✅, Slice 1 ✅, Slice 2 ✅, Slice 3 ✅, Slice 4 ✅, Slice 5 pending)
 > Created: 2026-03-27
-> Last apply batch: Slice 3 complete — 2026-09-27
+> Last apply batch: Slice 4 complete — 2026-09-27
 
 ---
 
@@ -209,33 +209,33 @@ status: in-progress
 
 ---
 
-## Slice 4: Controls
+## Slice 4: Controls ✅ DONE
 
-**T4.1** [S] Create `src/components/controls/KeySelector.jsx`
+**T4.1** ✅ [S] Create `src/components/controls/KeySelector.jsx`
 
 - What: shadcn `<Select value={\`\${selectedKey}-\${selectedMode}\`} onValueChange={...}>`; on change: parse value as `"C-major"`→ call`setSelectedKey('C', 'major')`; display trigger label: `\`\${selectedKey} \${selectedMode === 'major' ? 'Major' : 'Minor'}\``; render two `<SelectGroup>`: "Major" (12 items, values: 'C-major', 'C#-major', ...) and "Minor" (12 items, values: 'C-minor', ...); className: `w-full h-11 sm:w-auto`; reads `selectedKey`, `selectedMode` from store
 - Deps: T0.2 (select), T2.6
 - Covers: FR-3.1 (24 keys in dropdown), FR-3.2 (default C major displayed), FR-3.3 (no auto-harmonize on change — store action clears harmonyNotes but does not call harmonize())
 
-**T4.2** [S] Create `src/components/controls/HarmonizationSelector.jsx`
+**T4.2** ✅ [S] Create `src/components/controls/HarmonizationSelector.jsx`
 
 - What: shadcn `<Select value={harmonizationType} onValueChange={setHarmonizationType}>`; 5 options: value='thirds-up' label='3rds up', 'thirds-down'/'3rds down', 'fifths'/'5ths', 'sixths-up'/'6ths up', 'sixths-down'/'6ths down'; className: `w-full h-11 sm:w-auto`; reads `harmonizationType` from store
 - Deps: T0.2, T2.6
 - Covers: FR-4.1 (5-type dropdown), FR-4.2 (default 3rds up), FR-4.3 (no auto-harmonize)
 
-**T4.3** [S] Create `src/components/controls/HarmonizeButton.jsx`
+**T4.3** ✅ [S] Create `src/components/controls/HarmonizeButton.jsx`
 
 - What: shadcn `<Button className="w-full h-12 sm:w-auto sm:h-11" disabled={melodyNotes.length === 0} onClick={harmonize}>Harmonize →</Button>`; reads `melodyNotes.length` and `harmonize` from store; disabled state is both visual and functional (no click when disabled)
 - Deps: T2.6
 - Covers: FR-5.1 (enabled/disabled state), FR-5.2 (triggers harmonize()), FR-5.3 (empty melody guard)
 
-**T4.4** [M] Create `src/components/controls/ControlsSection.jsx`
+**T4.4** ✅ [M] Create `src/components/controls/ControlsSection.jsx`
 
 - What: `<section className="flex flex-col gap-3">`; section label `<p className="text-xs uppercase tracking-wider text-muted-foreground">Key & Style</p>`; `<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><div className="flex flex-col gap-3 sm:flex-row sm:gap-2"><KeySelector /><HarmonizationSelector /></div><HarmonizeButton /></div>`
 - Deps: T4.1, T4.2, T4.3
 - Covers: FR-10.3 (mobile: stacked full-width), FR-10.4 (desktop: single row)
 
-**T4.5** [S] Modify `src/App.jsx` — wire Controls zone
+**T4.5** ✅ [S] Modify `src/App.jsx` — wire Controls zone
 
 - What: Replace controls placeholder `<div>` with `<ControlsSection />`; add import
 - Deps: T4.4, T3.8 (previous App.jsx state)

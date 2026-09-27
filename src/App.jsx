@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import AppLayout from './components/layout/AppLayout';
 import Header from './components/layout/Header';
 import MelodyInputSection from './components/melody-input/MelodyInputSection';
+import ControlsSection from './components/controls/ControlsSection';
 import { useMelodexStore } from '@/store';
 
 function App() {
@@ -17,8 +18,8 @@ function App() {
       <Header />
       {/* Zone 1: Melody Input */}
       <MelodyInputSection />
-      {/* Zone 2: Controls — wired in Slice 4 (T4.5) */}
-      <div>{/* ControlsSection placeholder */}</div>
+      {/* Zone 2: Controls */}
+      <ControlsSection />
       {/* Zone 3: Results — wired in Slice 5 (T5.6) */}
       <div>{/* ResultsSection placeholder */}</div>
     </AppLayout>
