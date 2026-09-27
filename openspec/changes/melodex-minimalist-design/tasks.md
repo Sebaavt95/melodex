@@ -10,9 +10,9 @@ status: in-progress
 
 > Change: `melodex-minimalist-design`
 > Total tasks: 41 (T0: 5, Slice 1: 6, Slice 2: 10, Slice 3: 8, Slice 4: 5, Slice 5: 7)
-> Status: in-progress (T0 ✅, Slice 1 ✅, Slice 2 ✅, Slices 3–5 pending)
+> Status: in-progress (T0 ✅, Slice 1 ✅, Slice 2 ✅, Slice 3 ✅, Slices 4–5 pending)
 > Created: 2026-03-27
-> Last apply batch: Slice 2 complete — 2026-09-27
+> Last apply batch: Slice 3 complete — 2026-09-27
 
 ---
 
@@ -157,51 +157,51 @@ status: in-progress
 
 ---
 
-## Slice 3: Melody Input
+## Slice 3: Melody Input ✅ DONE
 
-**T3.1** [S] Create `src/components/melody-input/NoteChip.jsx`
+**T3.1** ✅ [S] Create `src/components/melody-input/NoteChip.jsx`
 
 - What: `<div className="flex items-center gap-1 px-3 h-8 rounded-full text-sm bg-indigo-900/50 text-indigo-300">` renders note name + `<button>×</button>` (min 24px); props: `{ note: string, onRemove: () => void }`
 - Deps: T1.1 (dark mode CSS)
 - Covers: FR-1.2 (chip display), FR-1.3 (× remove button per chip)
 
-**T3.2** [M] Create `src/components/melody-input/NoteChipsRow.jsx`
+**T3.2** ✅ [M] Create `src/components/melody-input/NoteChipsRow.jsx`
 
 - What: Renders two rows: (1) `<div className="flex flex-wrap gap-1.5">` of `<NoteChip>` components; (2) action row with ⌫ Last button (`h-10`, disabled when `melodyNotes.length === 0`) and Clear button (`h-10`, disabled when empty); reads `melodyNotes` from store; calls `removeNote(index)` (with the note's array index), `removeLastNote()`, `clearMelody()`; uses shadcn `<Button variant="outline">`
 - Deps: T3.1, T2.6
 - Covers: FR-1.2 (chips row layout), FR-1.3 (individual removal), FR-1.4 (⌫ Last disabled when empty), FR-1.5 (Clear All disabled when empty)
 
-**T3.3** [M] Create `src/components/melody-input/TextInput.jsx`
+**T3.3** ✅ [M] Create `src/components/melody-input/TextInput.jsx`
 
 - What: `<textarea className="w-full min-h-[44px] rounded-md border bg-background px-3 py-2 text-sm resize-none">` with placeholder `"C D E F G A B"`; local `const [inputValue, setInputValue] = useState('')`; `processToken(token)`: if `token.trim()` empty → skip; normalize `token.toUpperCase()`; call `isValidNote(normalized)` → if valid call `store.addNote(normalized)`, either way clear field; `onKeyDown`: if key === ' ' preventDefault + processToken(inputValue); if key === 'Enter' preventDefault + processToken(inputValue); onChange: setInputValue; no error message for invalid (silent discard per FR-1.1)
 - Deps: T2.1 (isValidNote), T2.6 (addNote)
 - Covers: FR-1.1 (space/enter parsing, case-insensitive, invalid discard, empty discard)
 
-**T3.4** [M] Create `src/components/piano/PianoKey.jsx`
+**T3.4** ✅ [M] Create `src/components/piano/PianoKey.jsx`
 
 - What: White key: `<button style={{touchAction:'none'}} className={cn('w-10 h-[110px] border border-slate-600 rounded-b-sm flex-shrink-0 transition-transform duration-75 active:scale-y-95', isMelodyActive && 'bg-indigo-400', isHarmonyActive && !isMelodyActive && 'bg-violet-400', !isMelodyActive && !isHarmonyActive && 'bg-slate-100 dark:bg-slate-200')} onPointerDown={() => onPress(note)} />`; Black key: same but `absolute top-0 w-[26px] h-[68px] z-10 bg-slate-800` (default), active colors `bg-indigo-500` / `bg-violet-500`; `style={{left: \`\${leftPx}px\`, touchAction:'none'}}`; Props: `{ note, isBlack, leftPx, isMelodyActive, isHarmonyActive, onPress }`
 - Deps: T1.1
 - Covers: FR-2.3 (press animation scale-y-95), FR-2.4 (melody indigo highlight), FR-2.5 (harmony violet highlight)
 
-**T3.5** [M] Create `src/components/piano/Piano.jsx`
+**T3.5** ✅ [M] Create `src/components/piano/Piano.jsx`
 
 - What: `React.memo` wrapped; declare constants: `WHITE_KEYS = ['C','D','E','F','G','A','B']`, `BLACK_KEYS = [{note:'C#',leftPx:28},{note:'D#',leftPx:68},{note:'F#',leftPx:148},{note:'G#',leftPx:188},{note:'A#',leftPx:228}]`; container: `<div className="overflow-x-auto rounded-md border border-slate-700"><div className="relative flex w-[280px] h-[110px]">`; render white keys as flex row, black keys as absolute overlays; `handleKeyPress(note)`: calls `playNote(note)` from `@/audio` + calls `onKeyPress(note)`; compute `isMelodyActive` by checking if `activeMelodyNotes.includes(note)` (deduped display); Props: `{ activeMelodyNotes: string[], activeHarmonyNotes?: string[], onKeyPress: (note: string) => void }`
 - Deps: T3.4, T2.8 (playNote for immediate audio feedback)
 - Covers: FR-2.1 (1-octave 280×110 rendering), FR-2.2 (key press adds note), FR-2.4 (melody highlights, deduped), FR-2.5 (harmony highlights)
 
-**T3.6** [M] Create `src/components/melody-input/InputModeTabs.jsx`
+**T3.6** ✅ [M] Create `src/components/melody-input/InputModeTabs.jsx`
 
 - What: shadcn `<Tabs value={inputMode} onValueChange={setInputMode}>`; two `<TabsTrigger>` values: "text" (label "Text") and "piano" (label "Piano"); Text tab content: `<TextInput />` then `<NoteChipsRow />`; Piano tab content: `<Piano activeMelodyNotes={melodyNotes} activeHarmonyNotes={harmonyNotes ?? []} onKeyPress={addNote} />`; reads `inputMode`, `melodyNotes`, `harmonyNotes`, `setInputMode`, `addNote` from `useMelodexStore`; switching tabs does NOT clear melody (store persists)
 - Deps: T0.1 (tabs), T3.2, T3.3, T3.5, T2.6
 - Covers: FR-11.2 (tab switching preserves melody), FR-2.4/FR-2.5 (piano sees current state)
 
-**T3.7** [S] Create `src/components/melody-input/MelodyInputSection.jsx`
+**T3.7** ✅ [S] Create `src/components/melody-input/MelodyInputSection.jsx`
 
 - What: `<section className="flex flex-col gap-3">`; section label `<p className="text-xs uppercase tracking-wider text-muted-foreground">Melody Input</p>`; renders `<InputModeTabs />`
 - Deps: T3.6
 - Covers: FR-10.2 (zone 1 layout wrapper)
 
-**T3.8** [S] Modify `src/App.jsx` — wire Melody Input zone
+**T3.8** ✅ [S] Modify `src/App.jsx` — wire Melody Input zone
 
 - What: Replace melody input placeholder `<div>` with `<MelodyInputSection />`; add import
 - Deps: T3.7, T1.6
