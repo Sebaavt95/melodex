@@ -1,1 +1,1 @@
-// Tone.js audio layer — to be implemented in future changes
+export { playNote, playMelody, playBoth, stopPlayback } from './player';
