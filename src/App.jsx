@@ -3,6 +3,7 @@ import AppLayout from './components/layout/AppLayout';
 import Header from './components/layout/Header';
 import MelodyInputSection from './components/melody-input/MelodyInputSection';
 import ControlsSection from './components/controls/ControlsSection';
+import ResultsSection from './components/results/ResultsSection';
 import { useMelodexStore } from '@/store';
 
 function App() {
@@ -20,8 +21,8 @@ function App() {
       <MelodyInputSection />
       {/* Zone 2: Controls */}
       <ControlsSection />
-      {/* Zone 3: Results — wired in Slice 5 (T5.6) */}
-      <div>{/* ResultsSection placeholder */}</div>
+      {/* Zone 3: Results */}
+      <ResultsSection />
     </AppLayout>
   );
 }
