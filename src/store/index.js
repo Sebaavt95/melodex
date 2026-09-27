@@ -1,1 +1,1 @@
-// Zustand store — to be implemented in future changes
+export { useMelodexStore } from './melodexStore';
