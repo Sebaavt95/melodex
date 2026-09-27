@@ -1,1 +1,4 @@
-// Music computation engine — to be implemented in future changes
+export * from './pitchClasses';
+export * from './scales';
+export * from './harmonize';
+// Note: chordSuggestions.js is NOT exported — it's a v2 stub only
